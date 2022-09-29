@@ -4,8 +4,10 @@ import com.github.arcoda.SCSwap.Commands.SMPCommand;
 import com.github.arcoda.SCSwap.Library.TeleportLibrary;
 import com.nametagedit.plugin.NametagEdit;
 import com.nametagedit.plugin.api.NametagAPI;
+import com.github.arcoda.SCSwap.Commands.BlockCommand;
 import com.github.arcoda.SCSwap.Commands.CMPCommand;
 import com.github.arcoda.SCSwap.Commands.SCSWapCommand;
+import com.github.arcoda.SCSwap.Commands.Tab.BlockTabComplete;
 import com.github.arcoda.SCSwap.Commands.Tab.SCSwapTabComplete;
 import com.github.arcoda.SCSwap.Listener.JoinListener;
 import com.github.arcoda.SCSwap.Listener.TeleportListener;
@@ -53,10 +55,12 @@ public final class SCSwap extends JavaPlugin {
         getTeleportLib.setInventory(YamlConfiguration.loadConfiguration(inventoryFile));
         registerListener(new TeleportListener());
         registerListener(new JoinListener());
-        this.getCommand("smp").setExecutor(new SMPCommand());
-        this.getCommand("cmp").setExecutor(new CMPCommand());
-        this.getCommand("scswap").setExecutor(new SCSWapCommand());
+        this.getCommand("smp").setExecutor(new SMPCommand(this));
+        this.getCommand("cmp").setExecutor(new CMPCommand(this));
+        this.getCommand("block").setExecutor(new BlockCommand(this));
+        this.getCommand("scswap").setExecutor(new SCSWapCommand(this));
         this.getCommand("scswap").setTabCompleter(new SCSwapTabComplete());
+        this.getCommand("block").setTabCompleter(new BlockTabComplete());
     }
 
     @Override
@@ -86,6 +90,7 @@ public final class SCSwap extends JavaPlugin {
         defaultSmp.add("Survival1_the_end");
         Config.addDefault("World.Survival", defaultSmp);
         Config.addDefault("World.Creative", "Main1");
+        Config.addDefault("smp.Blocked", new ArrayList<>());
         Config.options().copyDefaults(true);
         this.saveConfig();
         List<String> smpList = (List<String>) Config.getList("World.Survival");
