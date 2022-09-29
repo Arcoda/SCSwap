@@ -1,5 +1,6 @@
 package com.github.arcoda.SCSwap.Commands;
 import com.github.arcoda.SCSwap.SCSwap;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -8,8 +9,15 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 
 public class SCSWapCommand implements CommandExecutor {
-    private SCSwap plugin = SCSwap.getInstance();
-    @Override
+	
+	@SuppressWarnings("unused")
+	private SCSwap plugin;
+
+	public SCSWapCommand (SCSwap plugin) {
+		this.plugin = plugin;
+		plugin.getCommand("scswap").setExecutor(this);
+	}
+	@Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (args.length == 1) {
             if ((args[0].equals("reload")) && (sender.hasPermission("scswap.reload") || sender.isOp() || sender instanceof ConsoleCommandSender)) {
