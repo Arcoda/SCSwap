@@ -11,5 +11,8 @@ commands:
     description: Teleport player to the SMP part of the server
   cmp:
     description: Teleport player to the CMP part of the server
+  block:
+    description: Blocks/Unblocks someone from going into the SMP.
+    permission: server.operator
   scswap:
     description: Control SCSwap
