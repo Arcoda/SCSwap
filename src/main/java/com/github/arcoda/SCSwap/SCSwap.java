@@ -4,8 +4,10 @@ import com.github.arcoda.SCSwap.Commands.SMPCommand;
 import com.github.arcoda.SCSwap.Library.TeleportLibrary;
 import com.nametagedit.plugin.NametagEdit;
 import com.nametagedit.plugin.api.NametagAPI;
+import com.github.arcoda.SCSwap.Commands.BlockCommand;
 import com.github.arcoda.SCSwap.Commands.CMPCommand;
 import com.github.arcoda.SCSwap.Commands.SCSWapCommand;
+import com.github.arcoda.SCSwap.Commands.Tab.BlockTabComplete;
 import com.github.arcoda.SCSwap.Commands.Tab.SCSwapTabComplete;
 import com.github.arcoda.SCSwap.Listener.JoinListener;
 import com.github.arcoda.SCSwap.Listener.TeleportListener;
@@ -55,8 +57,10 @@ public final class SCSwap extends JavaPlugin {
         registerListener(new JoinListener());
         this.getCommand("smp").setExecutor(new SMPCommand());
         this.getCommand("cmp").setExecutor(new CMPCommand());
+        this.getCommand("block").setExecutor(new BlockCommand());
         this.getCommand("scswap").setExecutor(new SCSWapCommand());
         this.getCommand("scswap").setTabCompleter(new SCSwapTabComplete());
+        this.getCommand("block").setTabCompleter(new BlockTabComplete());
     }
 
     @Override
@@ -81,11 +85,14 @@ public final class SCSwap extends JavaPlugin {
         Config.addDefault("Portal.From", "FROM_SMP");
         Config.addDefault("Debug", false);
         List<String> defaultSmp = new ArrayList<>();
+        List<String> defaultBlocked = new ArrayList<>();
         defaultSmp.add("Survival1");
         defaultSmp.add("Survival1_nether");
         defaultSmp.add("Survival1_the_end");
+        Config.addDefault("smp.Blocked", defaultBlocked);
         Config.addDefault("World.Survival", defaultSmp);
         Config.addDefault("World.Creative", "Main1");
+        Config.addDefault("smp.Blocked", "Main1");
         Config.options().copyDefaults(true);
         this.saveConfig();
         List<String> smpList = (List<String>) Config.getList("World.Survival");
