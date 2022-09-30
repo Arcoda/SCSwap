@@ -57,10 +57,8 @@ public final class SCSwap extends JavaPlugin {
         registerListener(new JoinListener());
         this.getCommand("smp").setExecutor(new SMPCommand());
         this.getCommand("cmp").setExecutor(new CMPCommand());
-        this.getCommand("block").setExecutor(new BlockCommand());
         this.getCommand("scswap").setExecutor(new SCSWapCommand());
         this.getCommand("scswap").setTabCompleter(new SCSwapTabComplete());
-        this.getCommand("block").setTabCompleter(new BlockTabComplete());
     }
 
     @Override
@@ -89,10 +87,9 @@ public final class SCSwap extends JavaPlugin {
         defaultSmp.add("Survival1");
         defaultSmp.add("Survival1_nether");
         defaultSmp.add("Survival1_the_end");
-        Config.addDefault("smp.Blocked", defaultBlocked);
+        Config.addDefault("blocked", defaultBlocked);
         Config.addDefault("World.Survival", defaultSmp);
         Config.addDefault("World.Creative", "Main1");
-        Config.addDefault("smp.Blocked", "Main1");
         Config.options().copyDefaults(true);
         this.saveConfig();
         List<String> smpList = (List<String>) Config.getList("World.Survival");
