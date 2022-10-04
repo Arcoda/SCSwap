@@ -14,7 +14,7 @@ public class SMPCommand implements CommandExecutor {
 	
 	@Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-    	if(SCSwap.getInstance().getConfig().getList("blocked");.contains(sender.getName())) {
+    	if(SCSwap.getInstance().getConfig().getList("blocked").contains(sender.getName())) {
     		sender.sendMessage(ChatColor.RED + "You have been banned from the SMP. Open a ticket if you wish to appeal your ban.");
     		return true;
     	} else {
