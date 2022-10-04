@@ -1,7 +1,7 @@
 package com.github.arcoda.SCSwap.Commands;
 import com.github.arcoda.SCSwap.SCSwap;
 
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 
 import java.util.List;
 
