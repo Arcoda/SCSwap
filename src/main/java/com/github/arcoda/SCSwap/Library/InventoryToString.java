@@ -14,6 +14,10 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionType;
 
+import de.tr7zw.nbtapi.NBTContainer;
+import de.tr7zw.nbtapi.NBTItem;
+import netscape.javascript.JSObject;
+
 public class InventoryToString {
 
     static String sep = "•";
@@ -23,6 +27,7 @@ public class InventoryToString {
         String serInv = Math.round(inventory.getSize()/9) + blockSep;
         serInv += "e" + blockSep;
         ItemStack[] items = inventory.getContents();
+        boolean meta = false;
         for (int i = 0;i<Math.round(inventory.getSize()/9)*9;i++) {
             ItemStack item = items[i];
             if (item!=null) {
@@ -44,6 +49,7 @@ public class InventoryToString {
                             }
                         }
                         if (item.getItemMeta().hasEnchants()) {
+                        	meta = true;
                             serInv += "@e" + sep;
                             for (Entry<Enchantment,Integer> ench : item.getEnchantments().entrySet()) {
                                 for (int k = 0;k<Enchantment.values().length;k++) {
@@ -58,8 +64,12 @@ public class InventoryToString {
                             }
                         }
                         if (item.getItemMeta() instanceof PotionMeta) {
+                        	meta = true;
                             PotionData potion = ((PotionMeta) item.getItemMeta()).getBasePotionData();
                             serInv += "@p" + sep + potion.getType() + sep + (potion.isExtended() ? 1 : 0) + sep + (potion.isUpgraded() ? 1 : 0);
+                        }
+                        if(!meta) {
+                        	serInv += "@t" + sep + item.getItemMeta().getAsString().replace(sep, "-");
                         }
                     }
                     serInv += blockSep;
@@ -109,6 +119,11 @@ public class InventoryToString {
                     PotionMeta potionMeta = (PotionMeta) item.getItemMeta();
                     potionMeta.setBasePotionData(new PotionData(PotionType.valueOf(attribute[1]), attribute[2].equals("1"), attribute[3].equals("1")));
                     item.setItemMeta(potionMeta);
+                }else if (attribute[0].equals("t")) {
+                	NBTItem nbti = new NBTItem(item);
+                	NBTContainer container =  new NBTContainer(attribute[1]);
+                	nbti.mergeCompound(container);
+                	item = nbti.getItem();
                 }
             }
             ser.setItem(where, item);
