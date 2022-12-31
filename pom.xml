@@ -43,6 +43,28 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.1</version>
+        <executions>
+          <execution>
+            <id>shade</id>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <relocations>
+            <relocation>
+              <pattern>de.tr7zw.SCSwap.nbtapi</pattern>
+              <shadedPattern>scswap</shadedPattern>
+            </relocation>
+          </relocations>
+        </configuration>
+      </plugin>
         </plugins>
         <resources>
             <resource>
@@ -65,6 +87,11 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+        <repository>
+			<id>codemc-repo</id>
+			<url>https://repo.codemc.org/repository/maven-public/</url>
+			<layout>default</layout>
+		</repository>
     </repositories>
 
     <dependencies>
@@ -93,10 +120,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.sgtcaze</groupId>
-            <artifactId>NametagEdit</artifactId>
-            <version>f552f0d448</version>
-            <scope>provided</scope>
-        </dependency>
+  			<groupId>de.tr7zw</groupId>
+  			<artifactId>item-nbt-api</artifactId>
+  			<version>2.10.0</version>
+  			<scope>provided</scope>
+		</dependency>
     </dependencies>
 </project>
